@@ -10,9 +10,6 @@ export const ToolbarComponent = (props: ToolbarComponentPropsType) => {
         <AppBar position="static">
             <Toolbar style={{display: "flex", justifyContent: 'space-between'}}>
                 <Box style={{display: 'flex', alignItems: 'center'}}>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon/>
-                    </IconButton>
                     <Typography variant="h6">
                         Todolist
                     </Typography>
