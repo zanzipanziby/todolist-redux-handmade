@@ -1,5 +1,5 @@
 import React from 'react';
-import {FilterValueType, TaskType} from "../Types/Types";
+import {FilterValueType, TaskStatuses, TaskType} from "../Types/Types";
 import {Task} from "./Task";
 import {EditableSpan} from "./EditableSpan";
 import {AddItemForm} from "./AddItemForm";
@@ -15,7 +15,7 @@ type TodolistPropsType = {
     addTask: (todolistId: string, title: string) => void
     removeTask: (todolistId: string, taskId: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
-    changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
     changeTodolistTitle: (todolistId: string, title: string) => void
     removeTodolist: (todolistId: string) => void
     changeFilter: (todolistId: string, filterValue: FilterValueType) => void
@@ -28,10 +28,10 @@ export const Todolist = (props: TodolistPropsType) => {
             <Task
                 key={t.id}
                 title={t.title}
-                isDone={t.isDone}
+                status={t.status}
                 removeTask={() => props.removeTask(props.todolistId, t.id)}
                 changeTaskTitle={(title: string) => props.changeTaskTitle(props.todolistId, t.id, title)}
-                changeTaskStatus={(isDone: boolean) => props.changeTaskStatus(props.todolistId, t.id, isDone)}
+                changeTaskStatus={(status: TaskStatuses) => props.changeTaskStatus(props.todolistId, t.id, status)}
             />
         )
 

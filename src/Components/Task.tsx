@@ -2,13 +2,14 @@ import React from 'react';
 import {EditableSpan} from "./EditableSpan";
 import {Box, Checkbox, IconButton} from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
+import {TaskStatuses} from "../Types/Types";
 
 type TaskPropsType = {
     title: string
-    isDone: boolean
+    status: TaskStatuses
     removeTask: () => void
     changeTaskTitle: (title: string) => void
-    changeTaskStatus: (isDone: boolean) => void
+    changeTaskStatus: (status: TaskStatuses) => void
 
 }
 
@@ -17,8 +18,8 @@ export const Task = (props: TaskPropsType) => {
         <li style={{display: 'flex',justifyContent:'space-between', alignItems:'center'}}>
             <Box>
                 <Checkbox
-                    defaultChecked={props.isDone}
-                    onChange={e => props.changeTaskStatus(e.currentTarget.checked)}
+                    defaultChecked={props.status === TaskStatuses.Completed}
+                    onChange={e => props.changeTaskStatus(e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)}
                     color={'primary'}
                 />
                 <EditableSpan title={props.title} changeTitle={props.changeTaskTitle}/>

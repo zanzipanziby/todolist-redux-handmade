@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
-import {FilterValueType, StateType, TasksStateType, TaskType, TodolistType} from "./Types/Types";
+import {FilterValueType, StateType, TasksStateType, TaskStatuses, TaskType, TodolistType} from "./Types/Types";
 import {Todolist} from "./Components/Todolist";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./Redux/Reducers/tasksReducer";
 import {
@@ -44,8 +44,8 @@ function App() {
         dispatch(changeTaskTitleAC(todolistId, taskId, title))
     }
 
-    const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
-        dispatch(changeTaskStatusAC(todolistId, taskId, isDone))
+    const changeTaskStatus = (todolistId: string, taskId: string, status: TaskStatuses) => {
+        dispatch(changeTaskStatusAC(todolistId, taskId, status))
     }
     const changeFilter = (todolistId: string, filterValue: FilterValueType) => {
         dispatch(changeFilterAC(todolistId, filterValue))
@@ -69,9 +69,9 @@ function App() {
         const taskForTodolist1 = (tasks: Array<TaskType>, filterValue: FilterValueType) => {
             switch (filterValue) {
                 case "active":
-                    return tasks.filter(t => !t.isDone)
+                    return tasks.filter(t => t.status === TaskStatuses.New)
                 case "completed":
-                    return tasks.filter(t => t.isDone)
+                    return tasks.filter(t => t.status === TaskStatuses.Completed)
                 default:
                     return tasks
             }

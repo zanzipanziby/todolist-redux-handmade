@@ -2,8 +2,8 @@ import {ActionType, FilterValueType, TodolistType} from "../../Types/Types";
 import {v1} from "uuid";
 
 const initialState: Array<TodolistType> = [
-    {id: '1', title: 'What to learn', filter: 'all'},
-    {id: '2', title: 'What to buy', filter: 'all'},
+    {id: '1', title: 'What to learn', filter: 'all', addedDate: '', order: 0},
+    {id: '2', title: 'What to buy',filter: 'all', addedDate: '', order: 0},
 ]
 
 export const todolistsReducer = (state: Array<TodolistType> = initialState,

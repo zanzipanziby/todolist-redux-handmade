@@ -1,18 +1,61 @@
-import {ActionType, TasksStateType, TaskType} from "../../Types/Types";
+import {ActionType, TasksStateType, TaskStatuses, TaskType} from "../../Types/Types";
 import {v1} from "uuid";
 
 const initialState: TasksStateType = {
     ['1']: [
-        {id: v1(), title: 'Html', isDone: true},
-        {id: v1(), title: 'Css', isDone: true},
-        {id: v1(), title: 'React', isDone: false},
-        {id: v1(), title: 'Redux', isDone: false},
+        {
+            id: v1(),
+            title: 'HTML',
+            status: TaskStatuses.Completed,
+            addedDate:'',
+            deadline: null,
+            description: '',
+            order: 0,
+            priority: 0,
+            startDate: '',
+            todoListId: '1'
+
+        },
+        {
+            id: v1(),
+            title: 'CSS',
+            status: TaskStatuses.Completed,
+            addedDate:'',
+            deadline: null,
+            description: '',
+            order: 0,
+            priority: 0,
+            startDate: '',
+            todoListId: '1'
+        },
+
     ],
     ['2']: [
-        {id: v1(), title: 'Beer', isDone: true},
-        {id: v1(), title: 'Fish', isDone: true},
-        {id: v1(), title: 'Cheese', isDone: false},
-        {id: v1(), title: 'Meat', isDone: false},
+        {
+            id: v1(),
+            title: 'Beer',
+            status: TaskStatuses.Completed,
+            addedDate:'',
+            deadline: null,
+            description: '',
+            order: 0,
+            priority: 0,
+            startDate: '',
+            todoListId: '2'
+        },
+        {
+            id: v1(),
+            title: 'Meat',
+            status: TaskStatuses.Completed,
+            addedDate:'',
+            deadline: null,
+            description: '',
+            order: 0,
+            priority: 0,
+            startDate: '',
+            todoListId: '2'
+
+        },
     ]
 }
 
@@ -20,7 +63,18 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
     debugger
     switch (action.type) {
         case "ADD_TASK":
-            const newTask: TaskType = {id: v1(), title: action.payload.title, isDone: false}
+            const newTask: TaskType = {
+                id: v1(),
+                title: action.payload.title,
+                status: TaskStatuses.New,
+                addedDate:'',
+                deadline: null,
+                description: '',
+                order: 0,
+                priority: 0,
+                startDate: '',
+                todoListId: action.payload.todolistId
+            }
             return {
                 ...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]]
             }
@@ -42,7 +96,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {
                 ...state, [action.payload.todolistId]: state[action.payload.todolistId]
                     .map(t => t.id === action.payload.taskId
-                        ? {...t, isDone: action.payload.isDone}
+                        ? {...t, status: action.payload.status}
                         : t)
             }
         case "REMOVE_TODOLIST":
@@ -82,13 +136,13 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
 }
 
 export type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
-export const changeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean) => {
+export const changeTaskStatusAC = (todolistId: string, taskId: string, status: TaskStatuses) => {
     return {
         type: 'CHANGE_TASK_STATUS',
         payload: {
             todolistId,
             taskId,
-            isDone
+            status
         }
     } as const
 }
