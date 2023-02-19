@@ -1,25 +1,40 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {FilterValueType, StateType, TasksStateType, TaskStatuses, TaskType, TodolistType} from "./Types/Types";
 import {Todolist} from "./Components/Todolist";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./Redux/Reducers/tasksReducer";
 import {
-    addTodolistAC,
+    addTaskTC,
+    removeTaskTC, updateTaskTC
+} from "./Redux/Reducers/tasksReducer";
+import {
+    addTodolistTC,
     changeFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC
+    changeTodolistTitleAC, changeTodolistTitleTC, getTodolistsTC,
+    removeTodolistAC, removeTodolistTC
 } from "./Redux/Reducers/todolistsReducer";
 import {AddItemForm} from "./Components/AddItemForm";
 import {AppBar, Box, Button, Grid, IconButton, Paper, TextField, Toolbar, Typography} from "@material-ui/core";
 import {ToolbarComponent} from "./Components/ToolbarComponent";
 import {LoginPage} from "./Components/LoginPage";
+import {useAppDispatch} from "./CustomHooks/CustomHooks";
+
 
 function App() {
 
+    //  ----------------  Get State and Dispatch  ------------------
+
     const todolists = useSelector<StateType, Array<TodolistType>>((state: StateType) => state.todolists)
     const tasks = useSelector<StateType, TasksStateType>((state: StateType) => state.tasks)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
+
+
+    //  ------------  Get Todolists from server  --------------
+    useEffect(() => {
+
+        dispatch(getTodolistsTC())
+
+    }, [])
 
 
     //-----------   PopUpState ---------------
@@ -33,34 +48,34 @@ function App() {
     }
 
 
-    //--------  CRUD  ---------------
+    //-----------  CRUD  ---------------
     const addTask = (todolistId: string, title: string) => {
-        dispatch(addTaskAC(todolistId, title))
+        dispatch(addTaskTC(todolistId, title))
     }
     const removeTask = (todolistId: string, taskId: string) => {
-        dispatch(removeTaskAC(todolistId, taskId))
+        dispatch(removeTaskTC(todolistId, taskId))
     }
     const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        dispatch(changeTaskTitleAC(todolistId, taskId, title))
+        dispatch(updateTaskTC(todolistId, taskId, {title: title}))
     }
 
     const changeTaskStatus = (todolistId: string, taskId: string, status: TaskStatuses) => {
-        dispatch(changeTaskStatusAC(todolistId, taskId, status))
+        dispatch(updateTaskTC(todolistId, taskId, {status: status}))
     }
     const changeFilter = (todolistId: string, filterValue: FilterValueType) => {
         dispatch(changeFilterAC(todolistId, filterValue))
     }
 
     const addTodolist = (title: string) => {
-        dispatch(addTodolistAC(title))
+        dispatch(addTodolistTC(title))
     }
 
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        dispatch(changeTodolistTitleAC(todolistId, title))
+        dispatch(changeTodolistTitleTC(todolistId, title))
     }
 
     const removeTodolist = (todolistId: string) => {
-        dispatch(removeTodolistAC(todolistId))
+        dispatch(removeTodolistTC(todolistId))
     }
 
 
@@ -99,14 +114,15 @@ function App() {
     return (
         <div className="App">
             <LoginPage popUp={popUp} closePopUp={closePopUp}/>
-            <ToolbarComponent openPopUp={openPopUp}/>
-            <Grid container spacing={5} style={{paddingTop: '5%'}}>
-                <Grid item xs={12}>
-                    <AddItemForm callback={addTodolist} label={'New Todolist'}/>
+            <Paper elevation={4}>
+                <ToolbarComponent openPopUp={openPopUp}/>
+                <Grid container spacing={5} style={{padding: '5%'}}>
+                    <Grid item xs={12}>
+                        <AddItemForm callback={addTodolist} label={'New Todolist'}/>
+                    </Grid>
+                    {todolistsRender}
                 </Grid>
-                {todolistsRender}
-            </Grid>
-
+            </Paper>
         </div>
     );
 }

@@ -1,22 +1,19 @@
 // -------------- State ----------------
 import {
     AddTodolistACType, ChangeFilterACType,
-    ChangeTodolistTitleACType,
+    ChangeTodolistTitleACType, GetTodolistsACType,
     removeTodolistACType,
     todolistsReducer
 } from "../Redux/Reducers/todolistsReducer";
 import {
     AddTaskACType,
-    ChangeTaskStatusACType,
-    ChangeTaskTitleACType,
+    GetTasksACType,
     RemoveTaskACType,
-    tasksReducer
+    tasksReducer, UpdateTaskACType
 } from "../Redux/Reducers/tasksReducer";
+import {RootStateType} from "../Redux/store";
 
-export type StateType = {
-    todolists: Array<TodolistType>,
-    tasks: TasksStateType
-}
+export type StateType = RootStateType
 
 
 // -------------- Todolists --------------------
@@ -55,15 +52,16 @@ export enum TaskStatuses {
 }
 
 
-// ----------------  Action  ---------------------
+// ----------------   Action  ---------------------
 export type ActionType = RemoveTaskACType
-    | ChangeTaskTitleACType
-    | ChangeTaskStatusACType
     | ChangeTodolistTitleACType
     | AddTaskACType
     | removeTodolistACType
     | AddTodolistACType
     | ChangeFilterACType
+    | GetTodolistsACType
+    | GetTasksACType
+    | UpdateTaskACType
 
 
 //----------------------------------------------------------
@@ -77,14 +75,15 @@ export type TodolistServerResponseType = {
     order: number
 }
 
-export type UpdatedTaskModel = {
+export type UpdatedTaskModelType = {
     title: string
     description: string
     status: TaskStatuses
     priority: number
     startDate: string
-    deadline: string
+    deadline: string | null
 }
+
 
 export type TodolistResponseType<T = {}> = {
     data: T

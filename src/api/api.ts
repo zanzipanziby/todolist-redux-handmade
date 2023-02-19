@@ -4,7 +4,7 @@ import {
     TaskResponseType, TaskType,
     TodolistResponseType,
     TodolistServerResponseType,
-    UpdatedTaskModel
+    UpdatedTaskModelType
 } from "../Types/Types";
 
 
@@ -18,7 +18,7 @@ const instance = axios.create({
 
 export const todolistsAPI = {
     getTodolist() {
-        return instance.get('todo-lists').then(res => res.data)
+        return instance.get<TodolistServerResponseType[]>('todo-lists').then(res => res.data)
     },
     addTodolist(title: string) {
         return instance.post<TodolistResponseType<{ item: TodolistServerResponseType }>>('todo-lists', {title: title})
@@ -47,7 +47,7 @@ export const tasksAPI = {
         return instance.delete<TaskResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
             .then(res => res.data)
     },
-    updateTask(todolistId: string, taskId: string, updatedTask: UpdatedTaskModel) {
+    updateTask(todolistId: string, taskId: string, updatedTask: UpdatedTaskModelType) {
         return instance.put<TaskResponseType<{item: TaskType}>>(`/todo-lists/${todolistId}/tasks/${taskId}`, updatedTask)
             .then(res => res.data)
     },

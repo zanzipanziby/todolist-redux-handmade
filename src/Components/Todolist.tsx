@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FilterValueType, TaskStatuses, TaskType} from "../Types/Types";
 import {Task} from "./Task";
 import {EditableSpan} from "./EditableSpan";
 import {AddItemForm} from "./AddItemForm";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {Box, Grid, IconButton, Card, ButtonGroup, Button} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import {useAppDispatch} from "../CustomHooks/CustomHooks";
+import {getTodolistsTC} from "../Redux/Reducers/todolistsReducer";
+import {getTasksAC, getTasksTC} from "../Redux/Reducers/tasksReducer";
 
 
 type TodolistPropsType = {
@@ -23,6 +27,13 @@ type TodolistPropsType = {
 
 
 export const Todolist = (props: TodolistPropsType) => {
+
+    const dispatch = useAppDispatch()
+    useEffect(()=> {
+        dispatch(getTasksTC(props.todolistId))
+    }, [])
+
+
     const tasksRender = props.tasks.map(t => {
         return (
             <Task
