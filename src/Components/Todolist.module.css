@@ -1,3 +1,12 @@
 .todolistWrapper {
+    width: 370px;
+}
+.buttonGroup {
+    margin: 0 auto;
+}
 
+.TodoTitle {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
 }

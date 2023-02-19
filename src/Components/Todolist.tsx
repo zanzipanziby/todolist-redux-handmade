@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
+import s from "./Todolist.module.css"
 import {FilterValueType, TaskStatuses, TaskType} from "../Types/Types";
 import {Task} from "./Task";
 import {EditableSpan} from "./EditableSpan";
 import {AddItemForm} from "./AddItemForm";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {Box, Grid, IconButton, Card, ButtonGroup, Button} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
 import {useAppDispatch} from "../CustomHooks/CustomHooks";
-import {getTodolistsTC} from "../Redux/Reducers/todolistsReducer";
-import {getTasksAC, getTasksTC} from "../Redux/Reducers/tasksReducer";
+import {getTasksTC} from "../Redux/Reducers/tasksReducer";
 
 
 type TodolistPropsType = {
@@ -49,10 +48,10 @@ export const Todolist = (props: TodolistPropsType) => {
     })
 
     return (
-        <Grid item>
+        <Grid item className={s.todolistWrapper}>
             <Card elevation={5}>
                 <Box style={{display: 'flex', flexDirection: 'column', padding: '30px'}}>
-                    <h2 style={{margin:'10px 0'}}>
+                    <h2 className={s.TodoTitle}>
                         <EditableSpan
                             title={props.title}
                             changeTitle={title => props.changeTodolistTitle(props.todolistId, title)}
@@ -69,7 +68,7 @@ export const Todolist = (props: TodolistPropsType) => {
                         {tasksRender}
                     </ul>
 
-                    <ButtonGroup>
+                    <ButtonGroup className={s.buttonGroup}>
                         <Button
                             onClick={() => props.changeFilter(props.todolistId, 'all')}
                             variant={props.filter === 'all' ? 'contained' : 'outlined'}

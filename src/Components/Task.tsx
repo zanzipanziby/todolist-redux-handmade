@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './Task.module.css'
 import {EditableSpan} from "./EditableSpan";
 import {Box, Checkbox, IconButton} from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,7 +17,7 @@ type TaskPropsType = {
 export const Task = (props: TaskPropsType) => {
     return (
         <li style={{display: 'flex',justifyContent:'space-between', alignItems:'center'}}>
-            <Box>
+            <Box className={s.checkboxAndTitleWrap}>
                 <Checkbox
                     defaultChecked={props.status === TaskStatuses.Completed}
                     onChange={e => props.changeTaskStatus(e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)}

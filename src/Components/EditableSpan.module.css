@@ -5,3 +5,7 @@
 .error::placeholder {
     color: red;
 }
+
+.title {
+    word-wrap: anywhere;
+}

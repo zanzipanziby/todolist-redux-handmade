@@ -1,5 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {TextField, Box, Paper, Button} from "@material-ui/core";
+import React, {ChangeEvent,useState} from 'react';
+import s from "./AddItemForm.module.css"
+import {TextField, Box} from "@material-ui/core";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 
@@ -24,16 +25,10 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         }
 
     }
-    const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            onClick()
-        }
-    }
-
 
     return (
         <>
-            <Box style={{display: "flex", alignItems: "center"}}>
+            <Box className={s.addItemFormWrapper}>
                 <TextField
                     label={!error ? props.label : "Please, enter value"}
                     error={!!error}
@@ -41,8 +36,9 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                     variant="outlined"
                     value={title}
                     onChange={onChange}
-                    onKeyDown={(e) => e.key === 'Enter' && onClick()}
+                    onKeyDown={e => e.key === 'Enter' && onClick()}
                     onBlur={() => setError(null)}
+                    className={s.textField}
                 />
                 <Box>
                     <AddCircleOutlineIcon

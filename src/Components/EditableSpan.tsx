@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from './EditableSpan.module.css'
-import {Box, TextField} from "@material-ui/core";
+import {TextField} from "@material-ui/core";
 
 
 type EditableSpanPropsType = {
@@ -53,7 +53,15 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
         </>
 
     } else {
-        return <span style={{width: '100px', overflow:'hidden'}} onDoubleClick={editModeOn}>{props.title}</span>
+        return (
+            <span
+                className={s.title}
+                onDoubleClick={editModeOn}
+            >
+                {props.title}
+            </span>
+        )
+
     }
 
 };
