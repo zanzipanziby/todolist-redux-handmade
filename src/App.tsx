@@ -1,31 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {useDispatch, useSelector} from "react-redux";
-import {FilterValueType, StateType, TasksStateType, TaskStatuses, TaskType, TodolistType} from "./Types/Types";
-import {Todolist} from "./Components/Todolist";
-import {
-    addTaskTC,
-    removeTaskTC, updateTaskTC
-} from "./Redux/Reducers/tasksReducer";
+
+import {FilterValueType, ResponseStatusType, TaskStatuses, TaskType} from "./Types/Types";
+import {Todolist} from "./Components/Todolist/Todolist";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "./Redux/Reducers/tasksReducer";
 import {
     addTodolistTC,
     changeFilterAC,
-    changeTodolistTitleAC, changeTodolistTitleTC, getTodolistsTC,
-    removeTodolistAC, removeTodolistTC
+    changeTodolistTitleTC, getTodolistsTC,
+    removeTodolistTC
 } from "./Redux/Reducers/todolistsReducer";
-import {AddItemForm} from "./Components/AddItemForm";
-import {AppBar, Box, Button, Grid, IconButton, Paper, TextField, Toolbar, Typography} from "@material-ui/core";
-import {ToolbarComponent} from "./Components/ToolbarComponent";
-import {LoginPage} from "./Components/LoginPage";
-import {useAppDispatch} from "./CustomHooks/CustomHooks";
+import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
+import {Grid, LinearProgress, Paper} from "@material-ui/core";
+import {ToolbarComponent} from "./Components/Toolbar/ToolbarComponent";
+import {LoginPage} from "./Components/LoginPage/LoginPage";
+import {useAppDispatch, useAppSelector} from "./CustomHooks/CustomHooks";
+import SnackbarComponent from "./Components/Snackbar/Snackbar";
 
 
 function App() {
 
     //  ----------------  Get State and Dispatch  ------------------
 
-    const todolists = useSelector<StateType, Array<TodolistType>>((state: StateType) => state.todolists)
-    const tasks = useSelector<StateType, TasksStateType>((state: StateType) => state.tasks)
+    const todolists = useAppSelector(state => state.todolists)
+    const tasks = useAppSelector(state => state.tasks)
+    const responseStatus: ResponseStatusType = useAppSelector(state => state.app.isLoading)
+
     const dispatch = useAppDispatch()
 
 
@@ -34,7 +34,7 @@ function App() {
 
         dispatch(getTodolistsTC())
 
-    }, [])
+    }, [dispatch])
 
 
     //-----------   PopUpState ---------------
@@ -94,10 +94,8 @@ function App() {
 
         const propsForTodolist = {
             key: tl.id,
-            todolistId: tl.id,
-            title: tl.title,
+            todolist: tl,
             tasks: taskForTodolist1(tasks[tl.id], tl.filter),
-            filter: tl.filter,
             addTask: addTask,
             removeTask: removeTask,
             changeTaskTitle: changeTaskTitle,
@@ -114,8 +112,9 @@ function App() {
     return (
         <div className="App">
             <LoginPage popUp={popUp} closePopUp={closePopUp}/>
-            <Paper elevation={4}>
+            <Paper elevation={4} className={'wrapper'}>
                 <ToolbarComponent openPopUp={openPopUp}/>
+                {responseStatus === 'loading' ? <LinearProgress /> : <div style={{height:"4px"}}></div>}
                 <Grid container spacing={5} style={{padding: '5%'}}>
                     <Grid item xs={12}>
                         <AddItemForm callback={addTodolist} label={'New Todolist'}/>
@@ -123,6 +122,7 @@ function App() {
                     {todolistsRender}
                 </Grid>
             </Paper>
+            <SnackbarComponent/>
         </div>
     );
 }

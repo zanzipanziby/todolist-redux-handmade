@@ -1,10 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from './EditableSpan.module.css'
 import {TextField} from "@material-ui/core";
+import {ResponseStatusType, TaskStatuses} from "../../Types/Types";
 
 
 type EditableSpanPropsType = {
     title: string
+    status?: TaskStatuses
     changeTitle: (title: string) => void
 }
 export const EditableSpan = (props: EditableSpanPropsType) => {
@@ -55,7 +57,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
     } else {
         return (
             <span
-                className={s.title}
+                className={props.status !== TaskStatuses.Completed ? s.title : `${s.title} ${s.completed}`}
                 onDoubleClick={editModeOn}
             >
                 {props.title}

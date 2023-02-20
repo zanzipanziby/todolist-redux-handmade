@@ -1,11 +1,14 @@
-import React, {ChangeEvent,useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import s from "./AddItemForm.module.css"
-import {TextField, Box} from "@material-ui/core";
+import {TextField, Box, Button, Icon} from "@material-ui/core";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import {ResponseStatusType} from "../../Types/Types";
+import AddIcon from '@material-ui/icons/Add';
 
 
 type AddItemFormPropsType = {
     label: string
+    options?: ResponseStatusType
     callback: (title: string) => void
 }
 export const AddItemForm = (props: AddItemFormPropsType) => {
@@ -16,7 +19,6 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         setTitle(e.currentTarget.value)
     }
     const onClick = () => {
-        debugger
         if (title.trim()) {
             props.callback(title.trim())
             setTitle('')
@@ -39,13 +41,25 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                     onKeyDown={e => e.key === 'Enter' && onClick()}
                     onBlur={() => setError(null)}
                     className={s.textField}
+                    disabled={props.options === 'loading'}
                 />
                 <Box>
-                    <AddCircleOutlineIcon
-                        fontSize={'large'}
+                    {/*<AddCircleOutlineIcon*/}
+                    {/*    fontSize={'large'}*/}
+                    {/*    color={'primary'}*/}
+                    {/*    onClick={onClick}*/}
+                    {/*    aria-disabled={!!error && props.options === 'loading'}*/}
+                    {/*/>*/}
+                    <Button
+                        size={'medium'}
+                        variant={'text'}
                         color={'primary'}
+                        disabled={!!error || props.options === 'loading'}
                         onClick={onClick}
-                        aria-disabled={!!error}/>
+                        fullWidth={false}
+                    >
+                        <AddIcon/>
+                    </Button>
                 </Box>
             </Box>
         </>

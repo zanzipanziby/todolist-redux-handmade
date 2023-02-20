@@ -9,3 +9,7 @@
 .title {
     word-wrap: anywhere;
 }
+
+.completed {
+    text-decoration: line-through;
+}

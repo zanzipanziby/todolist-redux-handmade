@@ -1,24 +1,28 @@
 // -------------- State ----------------
 import {
-    AddTodolistACType, ChangeFilterACType,
+    AddTodolistACType, ChangeFilterACType, ChangeTodolistEntityStatusACType,
     ChangeTodolistTitleACType, GetTodolistsACType,
     removeTodolistACType,
-    todolistsReducer
 } from "../Redux/Reducers/todolistsReducer";
 import {
     AddTaskACType,
     GetTasksACType,
     RemoveTaskACType,
-    tasksReducer, UpdateTaskACType
+    UpdateTaskACType
 } from "../Redux/Reducers/tasksReducer";
 import {RootStateType} from "../Redux/store";
+import {ChangeResponseStatusACType, SetResponseErrorACType} from "../Redux/Reducers/appReducer";
 
 export type StateType = RootStateType
 
 
 // -------------- Todolists --------------------
 
-export type TodolistType = TodolistServerResponseType & { filter: FilterValueType }
+export type TodolistType = TodolistServerResponseType &
+    {
+        filter: FilterValueType,
+        entityStatus: ResponseStatusType
+    }
 
 export type FilterValueType = 'all' | 'active' | 'completed'
 
@@ -52,6 +56,14 @@ export enum TaskStatuses {
 }
 
 
+// --------------  AppState   --------------
+export type appStateType = {
+    isLoading: ResponseStatusType
+    error: string | null
+}
+
+export type ResponseStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+
 // ----------------   Action  ---------------------
 export type ActionType = RemoveTaskACType
     | ChangeTodolistTitleACType
@@ -62,6 +74,9 @@ export type ActionType = RemoveTaskACType
     | GetTodolistsACType
     | GetTasksACType
     | UpdateTaskACType
+    | ChangeResponseStatusACType
+    | SetResponseErrorACType
+    | ChangeTodolistEntityStatusACType
 
 
 //----------------------------------------------------------

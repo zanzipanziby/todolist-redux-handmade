@@ -1,0 +1,13 @@
+.checkboxAndTitleWrap {
+    display: flex;
+    align-items: center;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.task:hover {
+    background-color: rgb(243, 247, 255);
+}

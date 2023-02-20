@@ -1,13 +1,13 @@
 .error {
-    color: red;
+
 }
 
 .addItemFormWrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
+
 }
 
 .textField {
-    width: 80%;
+
 }

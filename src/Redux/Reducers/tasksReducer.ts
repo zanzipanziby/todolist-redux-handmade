@@ -7,6 +7,8 @@ import {
 
 import {Dispatch} from "redux";
 import {tasksAPI} from "../../api/api";
+import {changeResponseStatusAC, setResponseErrorAC} from "./appReducer";
+import {changeTodolistEntityStatusAC} from "./todolistsReducer";
 
 const initialState: TasksStateType = {
     // ['1']: [
@@ -155,7 +157,10 @@ export const addTaskAC = (task: TaskType) => {
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     tasksAPI.getTasks(todolistId)
-        .then(data => dispatch(getTasksAC(todolistId, data.items)))
+        .then(data => {
+            dispatch(getTasksAC(todolistId, data.items))
+            dispatch(changeResponseStatusAC('succeeded'))
+        })
 }
 
 
@@ -166,9 +171,21 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
         })
 }
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(changeResponseStatusAC('loading'))
+    dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
     tasksAPI.addTask(todolistId, title)
         .then(data => {
-                dispatch(addTaskAC(data.data.item))
+                if (data.resultCode === 0) {
+                    dispatch(addTaskAC(data.data.item))
+                } else {
+                    if (data.messages.length) {
+                        dispatch(setResponseErrorAC(data.messages[0]))
+                    } else {
+                        dispatch(setResponseErrorAC('some error'))
+                    }
+                }
+                dispatch(changeResponseStatusAC('succeeded'))
+            dispatch(changeTodolistEntityStatusAC(todolistId, 'succeeded'))
             }
         )
 }
