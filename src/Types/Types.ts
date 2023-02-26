@@ -5,7 +5,7 @@ import {
     removeTodolistACType,
 } from "../Redux/Reducers/todolistsReducer";
 import {
-    AddTaskACType,
+    AddTaskACType, ChangeTaskEntityStatusACType,
     GetTasksACType,
     RemoveTaskACType,
     UpdateTaskACType
@@ -18,7 +18,7 @@ export type StateType = RootStateType
 
 // -------------- Todolists --------------------
 
-export type TodolistType = TodolistServerResponseType &
+export type TodolistType = TodolistServerType &
     {
         filter: FilterValueType,
         entityStatus: ResponseStatusType
@@ -43,6 +43,7 @@ export type TaskType = {
     order: number
     priority: number
     startDate: string
+    entityStatus: ResponseStatusType
 }
 
 
@@ -77,13 +78,14 @@ export type ActionType = RemoveTaskACType
     | ChangeResponseStatusACType
     | SetResponseErrorACType
     | ChangeTodolistEntityStatusACType
+    | ChangeTaskEntityStatusACType
 
 
 //----------------------------------------------------------
 // ------------------|  Response Type  |--------------------
 //----------------------------------------------------------
 
-export type TodolistServerResponseType = {
+export type TodolistServerType = {
     id: string
     title: string
     addedDate: string

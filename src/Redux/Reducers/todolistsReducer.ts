@@ -2,7 +2,7 @@ import {
     ActionType,
     FilterValueType,
     ResponseStatusType,
-    TodolistServerResponseType,
+    TodolistServerType,
     TodolistType
 } from "../../Types/Types";
 // import {v1} from "uuid";
@@ -48,7 +48,7 @@ export const todolistsReducer = (state: Array<TodolistType> = initialState,
 //---------------  todolistAC -----------
 
 export type AddTodolistACType = ReturnType<typeof addTodolistAC>
-export const addTodolistAC = (todolist: TodolistServerResponseType) => {
+export const addTodolistAC = (todolist: TodolistServerType) => {
 
     return {
         type: "ADD_TODOLIST",
@@ -91,7 +91,7 @@ export const changeFilterAC = (todolistId: string, filterValue: FilterValueType)
 }
 
 export type GetTodolistsACType = ReturnType<typeof getTodolistsAC>
-export const getTodolistsAC = (todolists: TodolistServerResponseType[]) => {
+export const getTodolistsAC = (todolists: TodolistServerType[]) => {
     return {
         type: "GET_TODOLISTS",
         payload: {

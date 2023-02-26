@@ -11,5 +11,6 @@
 }
 
 .completed {
+    color: #b2b2b2;
     text-decoration: line-through;
 }

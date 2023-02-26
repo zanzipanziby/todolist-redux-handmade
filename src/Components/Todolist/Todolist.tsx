@@ -53,6 +53,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
                         <EditableSpan
                             title={props.todolist.title}
                             changeTitle={title => props.changeTodolistTitle(props.todolist.id, title)}
+                            disable={props.todolist.entityStatus === "loading"}
                         />
 
 
@@ -74,7 +75,7 @@ export const Todolist = memo((props: TodolistPropsType) => {
                     <AddItemForm
                         callback={title => props.addTask(props.todolist.id, title)}
                         label={'New Task'}
-                        options={props.todolist.entityStatus}
+                        disabled={props.todolist.entityStatus === 'loading'}
                     />
                     <ul>
                         {tasksRender}

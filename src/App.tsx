@@ -117,7 +117,7 @@ function App() {
                 {responseStatus === 'loading' ? <LinearProgress /> : <div style={{height:"4px"}}></div>}
                 <Grid container spacing={5} style={{padding: '5%'}}>
                     <Grid item xs={12}>
-                        <AddItemForm callback={addTodolist} label={'New Todolist'} options={responseStatus} />
+                        <AddItemForm callback={addTodolist} label={'New Todolist'} />
                     </Grid>
                     {todolistsRender}
                 </Grid>

@@ -3,7 +3,7 @@ import {
     GetTaskResponseType,
     TaskResponseType, TaskType,
     TodolistResponseType,
-    TodolistServerResponseType,
+    TodolistServerType,
     UpdatedTaskModelType
 } from "../Types/Types";
 
@@ -18,10 +18,10 @@ const instance = axios.create({
 
 export const todolistsAPI = {
     getTodolist() {
-        return instance.get<TodolistServerResponseType[]>('todo-lists').then(res => res.data)
+        return instance.get<TodolistServerType[]>('todo-lists').then(res => res.data)
     },
     addTodolist(title: string) {
-        return instance.post<TodolistResponseType<{ item: TodolistServerResponseType }>>('todo-lists', {title: title})
+        return instance.post<TodolistResponseType<{ item: TodolistServerType }>>('todo-lists', {title: title})
             .then(res => res.data)
     },
     removeTodolist(todolistId: string) {

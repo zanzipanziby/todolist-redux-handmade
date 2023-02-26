@@ -7,6 +7,7 @@ import {ResponseStatusType, TaskStatuses} from "../../Types/Types";
 type EditableSpanPropsType = {
     title: string
     status?: TaskStatuses
+    disable?: boolean
     changeTitle: (title: string) => void
 }
 export const EditableSpan = (props: EditableSpanPropsType) => {
@@ -36,7 +37,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
 
 
     //----------  JSX  ---------------
-    if (editMode) {
+    if (editMode && !props.disable) {
         return <>
             <TextField
                 label={!title && 'Please, enter value'}
