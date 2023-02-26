@@ -1,0 +1,8 @@
+
+.error404 {
+display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10vh;
+}
+

@@ -3,7 +3,7 @@ import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@material-ui
 import MenuIcon from '@material-ui/icons/Menu';
 
 type ToolbarComponentPropsType = {
-    openPopUp: () => void
+    callback?: () => void
 }
 export const ToolbarComponent = (props: ToolbarComponentPropsType) => {
     return (
@@ -15,7 +15,7 @@ export const ToolbarComponent = (props: ToolbarComponentPropsType) => {
                     </Typography>
                 </Box>
                 <Box>
-                    <Button color="inherit" onClick={props.openPopUp}>Login</Button>
+                    <Button color="inherit" onClick={props.callback}>Login</Button>
                 </Box>
             </Toolbar>
         </AppBar>
