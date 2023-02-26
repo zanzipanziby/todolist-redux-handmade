@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
 import {Grid} from "@material-ui/core";
-import {AddItemForm} from "./AddItemForm/AddItemForm";
-import {FilterValueType, ResponseStatusType, TaskStatuses, TaskType} from "../Types/Types";
-import {Todolist} from "./Todolist/Todolist";
-import {useAppDispatch, useAppSelector} from "../CustomHooks/CustomHooks";
+import {AddItemForm} from "../AddItemForm/AddItemForm";
+import {FilterValueType, ResponseStatusType, TaskStatuses, TaskType} from "../../Types/Types";
+import {Todolist} from "../Todolist/Todolist";
+import {useAppDispatch, useAppSelector} from "../../CustomHooks/CustomHooks";
 import {
     addTodolistTC,
     changeFilterAC,
     changeTodolistTitleTC,
     getTodolistsTC,
     removeTodolistTC
-} from "../Redux/Reducers/todolistsReducer";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "../Redux/Reducers/tasksReducer";
+} from "../../Redux/Reducers/todolistsReducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "../../Redux/Reducers/tasksReducer";
 
 export const TodolistsContainer = () => {
     //  ----------------  Get State and Dispatch  ------------------

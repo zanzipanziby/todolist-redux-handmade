@@ -8,7 +8,7 @@ import {useAppSelector} from "./CustomHooks/CustomHooks";
 import SnackbarComponent from "./Components/Snackbar/Snackbar";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {LoginPage} from "./Components/LoginPage/LoginPage";
-import {TodolistsContainer} from "./Components/TodolistsContainer";
+import {TodolistsContainer} from "./Components/TodolistsContainer/TodolistsContainer";
 import {Error404} from "./Components/Error404/Error404";
 
 
