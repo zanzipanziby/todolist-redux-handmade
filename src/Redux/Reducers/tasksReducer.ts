@@ -7,7 +7,7 @@ import {
 
 import {Dispatch} from "redux";
 import {tasksAPI} from "../../api/api";
-import {changeResponseStatusAC, setResponseErrorAC} from "./appReducer";
+import {changeResponseStatusAC} from "./appReducer";
 import {changeTodolistEntityStatusAC} from "./todolistsReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error";
@@ -115,6 +115,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {...state}
         case "ADD_TODOLIST":
             return {...state, [action.payload.todolist.id]: []}
+        case "SET_DEFAULT_STATE":
+            return {}
         default:
             return state
     }
@@ -176,6 +178,9 @@ export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, sta
         }
     } as const
 )
+
+
+
 
 
 // ------------   ThunkCreators   ---------------

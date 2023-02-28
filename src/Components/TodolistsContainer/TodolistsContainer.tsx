@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Grid} from "@material-ui/core";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
-import {FilterValueType, ResponseStatusType, TaskStatuses, TaskType} from "../../Types/Types";
+import {FilterValueType, TaskStatuses, TaskType} from "../../Types/Types";
 import {Todolist} from "../Todolist/Todolist";
 import {useAppDispatch, useAppSelector} from "../../CustomHooks/CustomHooks";
 import {
@@ -12,23 +12,35 @@ import {
     removeTodolistTC
 } from "../../Redux/Reducers/todolistsReducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../../Redux/Reducers/tasksReducer";
+import {Navigate} from "react-router-dom";
 
 export const TodolistsContainer = () => {
+
+
     //  ----------------  Get State and Dispatch  ------------------
 
     const todolists = useAppSelector(state => state.todolists)
     const tasks = useAppSelector(state => state.tasks)
-
+    const isLogged = useAppSelector(state => state.auth.isLogged)
+    console.log('login', isLogged)
 
     const dispatch = useAppDispatch()
 
 
     //  ------------  Get Todolists from server  --------------
     useEffect(() => {
+        if (!isLogged) {
+            return
+        }
 
         dispatch(getTodolistsTC())
 
-    }, [dispatch])
+    }, [])
+
+
+    if (!isLogged) {
+        return <Navigate to={'/login'}/>
+    }
 
 
     //-----------  CRUD  ---------------
@@ -62,7 +74,6 @@ export const TodolistsContainer = () => {
     }
 
 
-
     //----------   JSX & MAP  -----------
     const todolistsRender = todolists.map(tl => {
         const taskForTodolist1 = (tasks: Array<TaskType>, filterValue: FilterValueType) => {
@@ -93,10 +104,11 @@ export const TodolistsContainer = () => {
         )
     })
 
+
     return (
         <Grid container spacing={5} style={{padding: '5%'}}>
             <Grid item xs={12}>
-                <AddItemForm callback={addTodolist} label={'New Todolist'} />
+                <AddItemForm callback={addTodolist} label={'New Todolist'}/>
             </Grid>
             {todolistsRender}
         </Grid>

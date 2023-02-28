@@ -1,17 +1,22 @@
 // -------------- State ----------------
 import {
-    AddTodolistACType, ChangeFilterACType, ChangeTodolistEntityStatusACType,
-    ChangeTodolistTitleACType, GetTodolistsACType,
-    removeTodolistACType,
+    AddTodolistACType,
+    ChangeFilterACType,
+    ChangeTodolistEntityStatusACType,
+    ChangeTodolistTitleACType,
+    GetTodolistsACType,
+    removeTodolistACType, SetDefaultStateACType,
 } from "../Redux/Reducers/todolistsReducer";
 import {
-    AddTaskACType, ChangeTaskEntityStatusACType,
+    AddTaskACType,
+    ChangeTaskEntityStatusACType,
     GetTasksACType,
     RemoveTaskACType,
     UpdateTaskACType
 } from "../Redux/Reducers/tasksReducer";
 import {RootStateType} from "../Redux/store";
 import {ChangeResponseStatusACType, SetResponseErrorACType} from "../Redux/Reducers/appReducer";
+import {ChangeInitializedACType, LoginACType} from "../Redux/Reducers/authReducer";
 
 export type StateType = RootStateType
 
@@ -65,6 +70,29 @@ export type appStateType = {
 
 export type ResponseStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
+// ------------------  loginFormType  ----------------
+export type LoginFormDataType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+}
+
+
+export type LoginFormErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
+
+
+//  -------------  authStateType  -----------
+
+export type authStateType = {
+    isLogged: boolean
+    isInitialized: boolean
+}
+
+
 // ----------------   Action  ---------------------
 export type ActionType = RemoveTaskACType
     | ChangeTodolistTitleACType
@@ -79,6 +107,9 @@ export type ActionType = RemoveTaskACType
     | SetResponseErrorACType
     | ChangeTodolistEntityStatusACType
     | ChangeTaskEntityStatusACType
+    | LoginACType
+    | ChangeInitializedACType
+    | SetDefaultStateACType
 
 
 //----------------------------------------------------------
@@ -105,7 +136,7 @@ export type UpdatedTaskModelType = {
 export type TodolistResponseType<T = {}> = {
     data: T
     messages: string[]
-    fieldErrors: string[]
+    fieldErrors?: string[]
     resultCode: number
 }
 

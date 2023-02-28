@@ -1,7 +1,9 @@
 import axios from "axios";
 import {
     GetTaskResponseType,
-    TaskResponseType, TaskType,
+    LoginFormDataType,
+    TaskResponseType,
+    TaskType,
     TodolistResponseType,
     TodolistServerType,
     UpdatedTaskModelType
@@ -40,7 +42,7 @@ export const tasksAPI = {
             .then(res => res.data)
     },
     addTask(todolistId: string, title: string) {
-        return instance.post<TaskResponseType<{item: TaskType}>>(`todo-lists/${todolistId}/tasks`, {title: title})
+        return instance.post<TaskResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: title})
             .then(res => res.data)
     },
     removeTask(todolistId: string, taskId: string) {
@@ -48,10 +50,24 @@ export const tasksAPI = {
             .then(res => res.data)
     },
     updateTask(todolistId: string, taskId: string, updatedTask: UpdatedTaskModelType) {
-        return instance.put<TaskResponseType<{item: TaskType}>>(`/todo-lists/${todolistId}/tasks/${taskId}`, updatedTask)
+        return instance.put<TaskResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks/${taskId}`, updatedTask)
             .then(res => res.data)
     },
+}
 
+export const authAPI = {
+    login(loginData: LoginFormDataType) {
+        return instance.post<TodolistResponseType<{ userId: number }>>('/auth/login', loginData)
+            .then(res => res.data)
+    },
+    me() {
+        return instance.get<TodolistResponseType<{ id: number, login: string, email: string }>>('/auth/me')
+            .then(res => res.data)
+    },
+    logOut() {
+        return instance.delete<TodolistResponseType>('/auth/login')
+            .then(res => res.data)
+    }
 }
 
 

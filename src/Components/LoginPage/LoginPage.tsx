@@ -6,20 +6,23 @@ import {
     FormGroup,
     FormLabel,
     Grid,
+    Paper,
     TextField
 } from "@material-ui/core";
 import {useFormik} from "formik";
+import s from './LoginPage.module.css'
+import {LoginFormErrorType} from "../../Types/Types";
+import {useAppDispatch, useAppSelector} from "../../CustomHooks/CustomHooks";
+import {loginTC} from "../../Redux/Reducers/authReducer";
+import {Navigate} from "react-router-dom";
 
-
-
-
-type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
-}
 
 export const LoginPage = () => {
+
+    const dispatch = useAppDispatch()
+    const isLogged = useAppSelector(state => state.auth.isLogged)
+
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -27,54 +30,84 @@ export const LoginPage = () => {
             rememberMe: false
         },
         validate: (values) => {
-            const errors: FormikErrorType = {}
+            const errors: LoginFormErrorType = {}
             if (!values.email) {
-                errors.email = undefined
+                errors.email = 'Required'
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address'
             }
+            if (!values.password) {
+                errors.password = 'Required'
+            } else if (values.password.length < 3) {
+                errors.password = 'Password should be more 3 symbols'
+            }
+            console.log(errors)
             return errors
         },
-        onSubmit: values => alert(JSON.stringify(values))
+        onSubmit: values => {
+            dispatch(loginTC(values))
+
+            formik.resetForm()
+        }
     })
+
+    if(isLogged) {
+        return <Navigate to={'/'}/>
+    }
+
 
 
     return <Grid container justifyContent={'center'}>
-        <Grid item justifyContent={'center'}>
-            <FormControl>
-                <FormLabel>
-                    <p>To log in get registered
-                        <a href={'https://social-network.samuraijs.com/'}
-                           target={'_blank'} rel="noreferrer"> here
-                        </a>
-                    </p>
-                    <p>or use common test account credentials:</p>
-                    <p>Email: free@samuraijs.com</p>
-                    <p>Password: free</p>
-                </FormLabel>
+        <Grid item justifyContent={'center'} style={{marginTop: "10vh"}}>
+            <Paper elevation={5} style={{padding: "40px"}}>
+                <FormControl>
+                    <FormLabel>
+                        <h2>Sign in</h2>
+                        <p>To log in get registered
+                            <a href={'https://social-network.samuraijs.com/'}
+                               target={'_blank'} rel="noreferrer"> here
+                            </a>
+                        </p>
+                        <p>or use common test account credentials:</p>
+                        <p>Email: <span className={s.defaultLoginValue}>free@samuraijs.com</span></p>
+                        <p>Password: <span className={s.defaultLoginValue}>free</span></p>
+                    </FormLabel>
 
 
-                <form onSubmit={formik.handleSubmit}>
-                    <FormGroup>
-
-                        <TextField label="Email" margin="normal" {...formik.getFieldProps('email')}/>
-                        {formik.errors.email ? <div>{formik.errors.email}</div> : <br/>}
-                        <TextField type="password" label="Password"
-                                   margin="normal"
-                                   {...formik.getFieldProps('password')}
-                        />
-                        <FormControlLabel label={'Remember me'} control={
-                            <Checkbox
-                                checked={formik.values.rememberMe}
-                                {...formik.getFieldProps('rememberMe')}
+                    <form onSubmit={formik.handleSubmit}>
+                        <FormGroup>
+                            <TextField
+                                label="Email"
+                                margin="normal"
+                                autoComplete={"on"}
+                                {...formik.getFieldProps('email')}
                             />
-                        }/>
-                        <Button type={'submit'} variant={'contained'} color={'primary'} >
-                            Login
-                        </Button>
-                    </FormGroup>
-                </form>
-            </FormControl>
+                            {formik.touched.email && formik.errors.email ?
+                                <div className={s.error}>{formik.errors.email}</div> : null}
+                            <TextField
+                                type="password"
+                                label="Password"
+                                margin="normal"
+                                autoComplete={"on"}
+                                {...formik.getFieldProps('password')}
+
+                            />
+                            {formik.touched.password && formik.errors.password ?
+                                <div className={s.error}>{formik.errors.password}</div> : null}
+                            <FormControlLabel  label={'Remember me'} control={
+                                <Checkbox
+                                    color={"primary"}
+                                    checked={formik.values.rememberMe}
+                                    {...formik.getFieldProps('rememberMe')}
+                                />
+                            }/>
+                            <Button style={{marginTop:"20px"}} type={'submit'} variant={'contained'} color={'primary'}>
+                                Login
+                            </Button>
+                        </FormGroup>
+                    </form>
+                </FormControl>
+            </Paper>
         </Grid>
     </Grid>
 }

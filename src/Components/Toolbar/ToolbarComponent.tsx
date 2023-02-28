@@ -1,11 +1,21 @@
 import React from 'react';
-import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu';
+import {AppBar, Box, Button, Toolbar, Typography} from "@material-ui/core";
+import {useAppDispatch, useAppSelector} from "../../CustomHooks/CustomHooks";
+import {logoutTC} from "../../Redux/Reducers/authReducer";
 
 type ToolbarComponentPropsType = {
     callback?: () => void
 }
 export const ToolbarComponent = (props: ToolbarComponentPropsType) => {
+    const dispatch = useAppDispatch()
+
+    const isLogged = useAppSelector(state => state.auth.isLogged)
+    const logOutHandler = () => {
+        dispatch(logoutTC())
+    }
+
+
+
     return (
         <AppBar position="static">
             <Toolbar style={{display: "flex", justifyContent: 'space-between'}}>
@@ -15,7 +25,8 @@ export const ToolbarComponent = (props: ToolbarComponentPropsType) => {
                     </Typography>
                 </Box>
                 <Box>
-                    <Button color="inherit" onClick={props.callback}>Login</Button>
+                    {isLogged && <Button color="inherit" onClick={logOutHandler}>Log out</Button>}
+
                 </Box>
             </Toolbar>
         </AppBar>

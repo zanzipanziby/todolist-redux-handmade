@@ -1,0 +1,9 @@
+.defaultLoginValue {
+    color: #4a97e3;
+}
+
+
+.error {
+    color: red;
+    font-size: .7em;
+}
