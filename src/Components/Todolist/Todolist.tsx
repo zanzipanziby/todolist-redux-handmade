@@ -108,8 +108,6 @@ export const Todolist = memo((props: TodolistPropsType) => {
                         </Button>
                     </ButtonGroup>
                 </Box>
-
-
             </Card>
         </Grid>
 
