@@ -33,6 +33,7 @@ button {
 .App {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
+    overflow: hidden;
 
 }
 
@@ -40,7 +41,7 @@ button {
     margin: 0 auto;
     min-height: 100vh;
     min-width: 300px;
-    width: 80vw;
+    width: 85vw;
 }
 
 

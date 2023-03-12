@@ -13,6 +13,7 @@ import {
 } from "../../Redux/Reducers/todolistsReducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../../Redux/Reducers/tasksReducer";
 import {Navigate} from "react-router-dom";
+import s from './TodolistsContainer.module.css'
 
 export const TodolistsContainer = () => {
 
@@ -106,7 +107,7 @@ export const TodolistsContainer = () => {
 
 
     return (
-        <Grid container spacing={5} style={{padding: '5%'}}>
+        <Grid container spacing={5} className={s.todolistsContainer}>
             <Grid item xs={12}>
                 <AddItemForm callback={addTodolist} label={'New Todolist'}/>
             </Grid>

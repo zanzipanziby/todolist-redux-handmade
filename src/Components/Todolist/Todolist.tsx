@@ -28,7 +28,6 @@ export const Todolist = memo((props: TodolistPropsType) => {
 
     const dispatch = useAppDispatch()
     useEffect(() => {
-        debugger
         dispatch(getTasksTC(props.todolist.id))
         return ()=> {}
     }, [])

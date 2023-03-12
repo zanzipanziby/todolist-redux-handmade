@@ -5,22 +5,28 @@ import {
     FormControlLabel,
     FormGroup,
     FormLabel,
-    Grid,
+    Grid, IconButton,
     Paper,
     TextField
 } from "@material-ui/core";
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {useFormik} from "formik";
 import s from './LoginPage.module.css'
 import {LoginFormErrorType} from "../../Types/Types";
 import {useAppDispatch, useAppSelector} from "../../CustomHooks/CustomHooks";
 import {loginTC} from "../../Redux/Reducers/authReducer";
 import {Navigate} from "react-router-dom";
+import {useState} from "react";
 
 
 export const LoginPage = () => {
 
     const dispatch = useAppDispatch()
     const isLogged = useAppSelector(state => state.auth.isLogged)
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
+    const showPassword = () => setPasswordVisibility(true)
+    const hidePassword = () => setPasswordVisibility(false)
 
 
     const formik = useFormik({
@@ -51,14 +57,13 @@ export const LoginPage = () => {
         }
     })
 
-    if(isLogged) {
+    if (isLogged) {
         return <Navigate to={'/'}/>
     }
 
 
-
     return <Grid container justifyContent={'center'} className={s.loginMainContainer}>
-        <Grid item justifyContent={'center'} style={{height:"100%"}}>
+        <Grid item justifyContent={'center'} style={{height: "100%"}}>
             <Paper elevation={5} className={s.loginWrapper}>
                 <FormControl>
                     <FormLabel>
@@ -85,23 +90,36 @@ export const LoginPage = () => {
                             {formik.touched.email && formik.errors.email ?
                                 <div className={s.error}>{formik.errors.email}</div> : null}
                             <TextField
-                                type="password"
+                                type={passwordVisibility ? "text" : "password"}
                                 label="Password"
                                 margin="normal"
                                 autoComplete={"on"}
                                 {...formik.getFieldProps('password')}
-
+                                InputProps={{
+                                    endAdornment: (
+                                        <IconButton>
+                                            {
+                                                passwordVisibility
+                                                    ? <VisibilityOffIcon onClick={hidePassword}/>
+                                                    : <VisibilityIcon onClick={showPassword}/>
+                                            }
+                                        </IconButton>
+                                    )
+                                }}
                             />
+
+
                             {formik.touched.password && formik.errors.password ?
                                 <div className={s.error}>{formik.errors.password}</div> : null}
-                            <FormControlLabel  label={'Remember me'} control={
+                            <FormControlLabel label={'Remember me'} control={
                                 <Checkbox
                                     color={"primary"}
                                     checked={formik.values.rememberMe}
                                     {...formik.getFieldProps('rememberMe')}
                                 />
                             }/>
-                            <Button style={{marginTop:"20px"}} type={'submit'} variant={'contained'} color={'primary'}>
+                            <Button style={{marginTop: "20px"}} type={'submit'} variant={'contained'}
+                                    color={'primary'}>
                                 Login
                             </Button>
                         </FormGroup>

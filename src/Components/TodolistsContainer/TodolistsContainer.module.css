@@ -1,0 +1,9 @@
+.todolistsContainer {
+    padding: 5%;
+}
+
+@media screen and (max-width: 973px){
+    .todolistsContainer {
+        justify-content: center;
+    }
+}
