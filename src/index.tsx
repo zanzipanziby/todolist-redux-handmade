@@ -4,8 +4,8 @@ import './index.css';
 import App from './App';
 import {Provider} from "react-redux";
 import {store} from "./Redux/store";
-import {Container} from "@material-ui/core";
 import {HashRouter} from "react-router-dom";
+import {Container} from "@material-ui/core";
 
 
 const root = ReactDOM.createRoot(
@@ -15,9 +15,7 @@ root.render(
     <React.StrictMode>
         <HashRouter>
             <Provider store={store}>
-                <Container maxWidth={'lg'}>
                     <App/>
-                </Container>
             </Provider>
         </HashRouter>
     </React.StrictMode>

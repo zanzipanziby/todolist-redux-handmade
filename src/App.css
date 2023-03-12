@@ -1,37 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-h1,h2,h3,h4,h5,h6 {
-  margin: 0;
-  padding: 0;
-}
-* {
-  box-sizing: border-box;
-  user-select: none;
-}
-ul {
-  padding: 5%;
-  margin: 0;
-}
-li {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-input {
-  font-size: 1em;
-}
-button {
-  font-size: 1em;
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
 }
 
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+ul {
+    padding: 5%;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    font-size: 1em;
+}
+
+button {
+    font-size: 1em;
+}
+
+
 .App {
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+
 }
 
 .wrapper {
-  min-height: 98vh;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-width: 300px;
+    width: 80vw;
 }
+
+
+
+/*@media screen and (min-width: 1930px){*/
+/*    .wrapper {*/
+/*        max-width: 1600px;*/
+/*    }*/
+/*}*/
+
+@media screen and (max-width: 720px){
+    .wrapper {
+        width: 100vw;
+    }
+}
+
 
 
 

@@ -3,7 +3,25 @@
 }
 
 
+.loginMainContainer{
+
+}
+
+.loginWrapper {
+    margin-top: 10vh;
+    padding: 40px;
+    min-width: 300px;
+}
+
+
 .error {
     color: red;
     font-size: .7em;
+}
+
+@media screen and (max-width:400px) {
+    .loginWrapper {
+        margin-top: 0;
+        height: 91vh;
+    }
 }

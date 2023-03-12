@@ -57,9 +57,9 @@ export const LoginPage = () => {
 
 
 
-    return <Grid container justifyContent={'center'}>
-        <Grid item justifyContent={'center'} style={{marginTop: "10vh"}}>
-            <Paper elevation={5} style={{padding: "40px"}}>
+    return <Grid container justifyContent={'center'} className={s.loginMainContainer}>
+        <Grid item justifyContent={'center'} style={{height:"100%"}}>
+            <Paper elevation={5} className={s.loginWrapper}>
                 <FormControl>
                     <FormLabel>
                         <h2>Sign in</h2>
