@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/todolist-redux-handmade/static/css/main.444f56f9.css",
-    "main.js": "/todolist-redux-handmade/static/js/main.167dfb73.js",
+    "main.css": "/todolist-redux-handmade/static/css/main.a5b30ec8.css",
+    "main.js": "/todolist-redux-handmade/static/js/main.3c033793.js",
     "static/media/error-404.png": "/todolist-redux-handmade/static/media/error-404.c5dbf26bce8d7c5d3093.png",
     "index.html": "/todolist-redux-handmade/index.html",
-    "main.444f56f9.css.map": "/todolist-redux-handmade/static/css/main.444f56f9.css.map",
-    "main.167dfb73.js.map": "/todolist-redux-handmade/static/js/main.167dfb73.js.map"
+    "main.a5b30ec8.css.map": "/todolist-redux-handmade/static/css/main.a5b30ec8.css.map",
+    "main.3c033793.js.map": "/todolist-redux-handmade/static/js/main.3c033793.js.map"
   },
   "entrypoints": [
-    "static/css/main.444f56f9.css",
-    "static/js/main.167dfb73.js"
+    "static/css/main.a5b30ec8.css",
+    "static/js/main.3c033793.js"
   ]
 }
