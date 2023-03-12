@@ -13,13 +13,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
+        <HashRouter>
             <Provider store={store}>
                 <Container maxWidth={'lg'}>
-                    <HashRouter>
-                        <App/>
-                    </HashRouter>
+                    <App/>
                 </Container>
             </Provider>
+        </HashRouter>
     </React.StrictMode>
 );
 
