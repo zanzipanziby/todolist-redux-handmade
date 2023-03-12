@@ -17,7 +17,7 @@ import {LoginFormErrorType} from "../../Types/Types";
 import {useAppDispatch, useAppSelector} from "../../CustomHooks/CustomHooks";
 import {loginTC} from "../../Redux/Reducers/authReducer";
 import {Navigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 export const LoginPage = () => {
@@ -47,7 +47,7 @@ export const LoginPage = () => {
             } else if (values.password.length < 3) {
                 errors.password = 'Password should be more 3 symbols'
             }
-            console.log(errors)
+
             return errors
         },
         onSubmit: values => {
@@ -57,13 +57,25 @@ export const LoginPage = () => {
         }
     })
 
+    const [timerId, setTimerId] = useState(0)
+    // !!! ВАЖНО !!! Уточнить использование таймаута
+    useEffect(() => {
+        clearTimeout(timerId)
+        const id = setTimeout(() => {
+            console.log('hidePassword')
+            hidePassword()
+        }, 2000)
+        setTimerId(+id)
+    }, [passwordVisibility])
+
+
     if (isLogged) {
         return <Navigate to={'/'}/>
     }
 
 
     return <Grid container justifyContent={'center'} className={s.loginMainContainer}>
-        <Grid item justifyContent={'center'} style={{height: "100%"}}>
+        <Grid item justifyContent={'center'}>
             <Paper elevation={5} className={s.loginWrapper}>
                 <FormControl>
                     <FormLabel>
@@ -97,13 +109,14 @@ export const LoginPage = () => {
                                 {...formik.getFieldProps('password')}
                                 InputProps={{
                                     endAdornment: (
-                                        <IconButton>
+                                        <>
                                             {
                                                 passwordVisibility
-                                                    ? <VisibilityOffIcon onClick={hidePassword}/>
-                                                    : <VisibilityIcon onClick={showPassword}/>
+                                                    ?
+                                                    <IconButton onClick={hidePassword}><VisibilityOffIcon/></IconButton>
+                                                    : <IconButton onClick={showPassword}><VisibilityIcon/></IconButton>
                                             }
-                                        </IconButton>
+                                        </>
                                     )
                                 }}
                             />
